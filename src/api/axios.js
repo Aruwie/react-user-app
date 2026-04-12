@@ -1,7 +1,10 @@
-import axios from "axios"
+import axios from "axios";
 
-const api = axios.create({
+const instance = axios.create({
   baseURL: "https://reqres.in/api",
-})
+  headers: {
+    "x-api-key": "reqres_f58b948a359041178cbb63c69c37ad94",
+  },
+});
 
-export default api
+export default instance;
