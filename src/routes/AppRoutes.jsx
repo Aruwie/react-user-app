@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom"
+import { Routes, Route } from "react-router-dom"
 
 import Login from "../pages/Login"
 import Register from "../pages/Register"
@@ -8,30 +8,28 @@ import ProtectedRoute from "./ProtectedRoute"
 
 function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        <Route
-          path="/"
-          element={
-            <ProtectedRoute>
-              <Home />
-            </ProtectedRoute>
-          }
-        />
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
 
-        <Route
-          path="/user/:id"
-          element={
-            <ProtectedRoute>
-              <UserDetail />
-            </ProtectedRoute>
-          }
-        />
-      </Routes>
-    </BrowserRouter>
+      <Route
+        path="/user/:id"
+        element={
+          <ProtectedRoute>
+            <UserDetail />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
   )
 }
 

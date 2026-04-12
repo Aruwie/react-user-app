@@ -1,4 +1,5 @@
 import { useState, useContext } from "react"
+import { useNavigate } from "react-router-dom"
 import api from "../api/axios"
 import { AuthContext } from "../context/AuthContext"
 
@@ -7,6 +8,7 @@ function Login() {
   const [password, setPassword] = useState("")
 
   const { login } = useContext(AuthContext)
+  const navigate = useNavigate()
 
   const handleLogin = async (e) => {
     e.preventDefault()
@@ -25,7 +27,11 @@ function Login() {
         }
       )
 
+      // 🔥 simpan token ke context
       login(response.data.token)
+
+      // 🔥 redirect ke home
+      navigate("/")
 
       console.log("SUCCESS:", response.data)
     } catch (error) {
