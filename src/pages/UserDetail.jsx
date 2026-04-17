@@ -1,76 +1,49 @@
-import { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
-import axios from "../api/axios";
+import { useLocation, useNavigate } from "react-router-dom"
+import defaultAvatar from "../assets/default-avatar.png"
 
-export default function UserDetail() {
-  const { id } = useParams();
-  const navigate = useNavigate();
-
-  const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  const fetchUserDetail = async () => {
-    try {
-      setLoading(true);
-
-      const res = await axios.get(`/users/${id}`);
-      setUser(res.data.data);
-
-      setLoading(false);
-    } catch (err) {
-      console.log("Error fetching user detail:", err);
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    fetchUserDetail();
-  }, [id]);
-
-  if (loading) {
-    return (
-      <div className="p-6">
-        <p>Loading user detail...</p>
-      </div>
-    );
-  }
+function UserDetail() {
+  const { state: user } = useLocation()
+  const navigate = useNavigate()
 
   if (!user) {
     return (
-      <div className="p-6">
-        <p>User not found</p>
+      <div className="p-5">
+        <p>User tidak ditemukan</p>
         <button
           onClick={() => navigate("/")}
-          className="mt-4 px-4 py-2 bg-blue-500 text-white rounded"
+          className="mt-3 border px-3 py-1 rounded"
         >
-          Back to Home
+          Kembali
         </button>
       </div>
-    );
+    )
   }
 
   return (
-    <div className="p-6 max-w-xl mx-auto">
+    <div className="p-5">
       <button
         onClick={() => navigate("/")}
-        className="mb-4 px-4 py-2 bg-gray-300 rounded"
+        className="mb-4 border px-3 py-1 rounded"
       >
-        ← Back
+        ← Kembali
       </button>
 
-      <div className="bg-white shadow-lg rounded-lg p-6 text-center">
+      <div className="border p-5 rounded w-fit">
         <img
-          src={user.avatar}
-          alt={user.first_name}
-          className="w-32 h-32 rounded-full mx-auto"
+          src={user.avatar || defaultAvatar}
+          onError={(e) => (e.target.src = defaultAvatar)}
+          alt="avatar"
+          className="w-32 h-32 rounded-full mb-3"
         />
 
-        <h1 className="text-2xl font-bold mt-4">
+        <h2 className="text-xl font-bold">
           {user.first_name} {user.last_name}
-        </h1>
+        </h2>
 
-        <p className="text-gray-600 mt-2">{user.email}</p>
+        <p className="text-gray-500">{user.email}</p>
       </div>
     </div>
-  );
+  )
 }
+
+export default UserDetail

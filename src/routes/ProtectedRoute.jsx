@@ -3,7 +3,13 @@ import { Navigate } from "react-router-dom"
 import { AuthContext } from "../context/AuthContext"
 
 function ProtectedRoute({ children }) {
-  const { token } = useContext(AuthContext)
+  const context = useContext(AuthContext)
+
+  if (!context) {
+    return <p>Error: AuthContext tidak ditemukan</p>
+  }
+
+  const { token } = context
 
   if (!token) {
     return <Navigate to="/login" />
