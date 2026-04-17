@@ -1,24 +1,36 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Login from "../pages/Login";
-import Register from "../pages/Register";
-import Home from "../pages/Home";
-import UserDetail from "../pages/UserDetail";
-import ProtectedRoute from "./ProtectedRoute";
+import { Routes, Route } from "react-router-dom"
 
-export default function AppRoutes() {
+import Login from "../pages/Login"
+import Register from "../pages/Register"
+import Home from "../pages/Home"
+import UserDetail from "../pages/UserDetail"
+import ProtectedRoute from "./ProtectedRoute"
+
+function AppRoutes() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Public Routes */}
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+    <Routes>
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-        {/* Protected Routes */}
-        <Route element={<ProtectedRoute />}>
-          <Route path="/" element={<Home />} />
-          <Route path="/user/:id" element={<UserDetail />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
+      <Route
+        path="/"
+        element={
+          <ProtectedRoute>
+            <Home />
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/user/:id"
+        element={
+          <ProtectedRoute>
+            <UserDetail />
+          </ProtectedRoute>
+        }
+      />
+    </Routes>
+  )
 }
+
+export default AppRoutes
