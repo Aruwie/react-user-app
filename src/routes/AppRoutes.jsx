@@ -4,6 +4,7 @@ import Login from "../pages/Login"
 import UserDetail from "../pages/UserDetail"
 import Navbar from "../components/Navbar"
 import ProtectedRoute from "./ProtectedRoute"
+import Register from "../pages/Register"
 
 function AppRoutes() {
   return (
@@ -30,6 +31,8 @@ function AppRoutes() {
             </ProtectedRoute>
           }
         />
+
+        <Route path="/register" element={<Register />} />
       </Routes>
     </>
   )
