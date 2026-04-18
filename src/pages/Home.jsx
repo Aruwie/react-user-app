@@ -1,73 +1,82 @@
-import { useEffect, useState } from "react"
-import axios from "axios"
-import { useNavigate } from "react-router-dom"
+import { useEffect, useState } from "react";
+import api from "../api/axios";
+import { useNavigate } from "react-router-dom";
+import defaultAvatar from "../assets/default-avatar.png";
 
-import defaultAvatar from "../assets/default-avatar.png"
+const Home = () => {
+  const [users, setUsers] = useState([]);
+  const [page, setPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const navigate = useNavigate();
 
-function Home() {
-  const [users, setUsers] = useState([])
-  const [page, setPage] = useState(1)
-
-  const navigate = useNavigate()
-
-  const fetchUsers = async (pageNumber) => {
+  const fetchUsers = async (page) => {
     try {
-      const response = await axios.get(
-        `https://reqres.in/api/users?page=${pageNumber}`
-      )
-      setUsers(response.data.data)
-    } catch (error) {
-      console.error("ERROR FETCH USERS:", error)
+      const res = await api.get(`/users?page=${page}`);
+      setUsers(res.data.data);
+      setTotalPages(res.data.total_pages);
+    } catch (err) {
+      console.error("ERROR FETCH USERS:", err);
     }
-  }
+  };
 
   useEffect(() => {
-    fetchUsers(page)
-  }, [page])
+    fetchUsers(page);
+  }, [page]);
 
   return (
-    <div className="p-5">
-      <h1 className="text-2xl font-bold mb-4">User List</h1>
+    <div className="p-6 min-h-screen bg-gray-100">
+      <h1 className="text-2xl font-bold mb-6 text-center">
+        User List
+      </h1>
 
-      <div className="grid grid-cols-2 gap-4">
+      {/* USER GRID */}
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         {users.map((user) => (
           <div
             key={user.id}
-            className="border p-4 rounded cursor-pointer hover:bg-gray-100"
             onClick={() => navigate(`/users/${user.id}`)}
+            className="bg-white p-4 rounded-xl shadow hover:shadow-lg cursor-pointer text-center transition"
           >
             <img
               src={defaultAvatar}
-              alt="avatar"
-              className="w-20 h-20 rounded-full mb-2"
+              alt={user.first_name}
+              className="w-20 h-20 rounded-full mx-auto mb-3"
             />
 
             <p className="font-semibold">
               {user.first_name} {user.last_name}
             </p>
 
-            <p className="text-sm text-gray-500">{user.email}</p>
+            <p className="text-sm text-gray-500">
+              {user.email}
+            </p>
           </div>
         ))}
       </div>
 
-      <div className="mt-5 flex gap-2">
+      <div className="mt-8 flex justify-center items-center gap-4">
         <button
-          onClick={() => setPage(1)}
-          className="border px-3 py-1 rounded"
+          onClick={() => setPage(page - 1)}
+          disabled={page === 1}
+          className="px-4 py-2 bg-gray-300 rounded disabled:opacity-50"
         >
-          Page 1
+          Prev
         </button>
 
+        <span className="font-medium">
+          {page} / {totalPages}
+        </span>
+
         <button
-          onClick={() => setPage(2)}
-          className="border px-3 py-1 rounded"
+          onClick={() => setPage(page + 1)}
+          disabled={page === totalPages}
+          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
         >
-          Page 2
+          Next
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

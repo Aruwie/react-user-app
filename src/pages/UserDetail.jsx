@@ -1,49 +1,59 @@
-import { useLocation, useNavigate } from "react-router-dom"
-import defaultAvatar from "../assets/default-avatar.png"
+import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import api from "../api/axios";
+import defaultAvatar from "../assets/default-avatar.png";
 
-function UserDetail() {
-  const { state: user } = useLocation()
-  const navigate = useNavigate()
+const UserDetail = () => {
+  const { id } = useParams();
+  const navigate = useNavigate();
+  const [user, setUser] = useState(null);
+
+  const fetchUser = async () => {
+    try {
+      const res = await api.get(`/users/${id}`);
+      setUser(res.data.data);
+    } catch (err) {
+      console.error("ERROR FETCH USER:", err);
+    }
+  };
+
+  useEffect(() => {
+    fetchUser();
+  }, [id]);
 
   if (!user) {
     return (
-      <div className="p-5">
-        <p>User tidak ditemukan</p>
-        <button
-          onClick={() => navigate("/")}
-          className="mt-3 border px-3 py-1 rounded"
-        >
-          Kembali
-        </button>
+      <div className="flex justify-center items-center h-screen">
+        <p className="text-lg">Loading...</p>
       </div>
-    )
+    );
   }
 
   return (
-    <div className="p-5">
-      <button
-        onClick={() => navigate("/")}
-        className="mb-4 border px-3 py-1 rounded"
-      >
-        ← Kembali
-      </button>
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
+      <div className="bg-white rounded-2xl shadow-lg p-8 max-w-md w-full text-center">
 
-      <div className="border p-5 rounded w-fit">
         <img
-          src={user.avatar || defaultAvatar}
-          onError={(e) => (e.target.src = defaultAvatar)}
-          alt="avatar"
-          className="w-32 h-32 rounded-full mb-3"
+          src={defaultAvatar}
+          alt={user.first_name}
+          className="w-32 h-32 rounded-full mx-auto mb-4 shadow"
         />
 
-        <h2 className="text-xl font-bold">
+        <h2 className="text-2xl font-bold mb-2">
           {user.first_name} {user.last_name}
         </h2>
 
-        <p className="text-gray-500">{user.email}</p>
+        <p className="text-gray-500 mb-6">{user.email}</p>
+
+        <button
+          onClick={() => navigate("/")}
+          className="bg-blue-500 hover:bg-blue-600 text-white px-4 py-2 rounded-lg transition"
+        >
+          Back to Home
+        </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default UserDetail
+export default UserDetail;
