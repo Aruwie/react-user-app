@@ -24,7 +24,7 @@ const Home = () => {
   }, [page]);
 
   return (
-    <div className="p-6 min-h-screen bg-gray-100">
+    <main className="p-6 min-h-screen bg-gray-300">
       <h1 className="text-2xl font-bold mb-6 text-center">
         User List
       </h1>
@@ -35,7 +35,7 @@ const Home = () => {
           <div
             key={user.id}
             onClick={() => navigate(`/users/${user.id}`)}
-            className="bg-white p-4 rounded-xl shadow hover:shadow-lg cursor-pointer text-center transition"
+            className="bg-gray-50 p-4 rounded-xl shadow hover:shadow-lg cursor-pointer text-center transition"
           >
             <img
               src={defaultAvatar}
@@ -47,7 +47,7 @@ const Home = () => {
               {user.first_name} {user.last_name}
             </p>
 
-            <p className="text-sm text-gray-500">
+            <p className="text-sm text-gray-600">
               {user.email}
             </p>
           </div>
@@ -70,12 +70,12 @@ const Home = () => {
         <button
           onClick={() => setPage(page + 1)}
           disabled={page === totalPages}
-          className="px-4 py-2 bg-blue-500 text-white rounded disabled:opacity-50"
+          className="px-4 py-2 bg-blue-600 text-white rounded disabled:opacity-50"
         >
           Next
         </button>
       </div>
-    </div>
+    </main>
   );
 };
 

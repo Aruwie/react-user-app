@@ -22,14 +22,14 @@ function Navbar() {
           <>
             <Link
               to="/login"
-              className="bg-blue-500 hover:bg-blue-600 px-3 py-1 rounded"
+              className="bg-blue-600 hover:bg-blue-700 px-3 py-1 rounded"
             >
               Login
             </Link>
 
             <Link
               to="/register"
-              className="bg-green-500 hover:bg-green-600 px-3 py-1 rounded"
+              className="bg-green-600 hover:bg-green-700 px-3 py-1 rounded"
             >
               Register
             </Link>

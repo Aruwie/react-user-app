@@ -26,17 +26,17 @@ function Register() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+    <main className="flex justify-center items-center min-h-screen bg-gray-300 px-4">
       <form
         onSubmit={handleRegister}
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm"
+        className="bg-gray-50 p-6 rounded-xl shadow-lg border border-gray-200 w-full max-w-sm"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">
           Register
         </h2>
 
         {error && (
-          <p className="text-red-500 text-sm mb-2">{error}</p>
+          <p className="text-red-600 text-sm mb-2">{error}</p>
         )}
 
         <input
@@ -55,18 +55,18 @@ function Register() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="w-full bg-green-500 hover:bg-green-600 text-white p-2 rounded">
+        <button className="w-full bg-green-600 hover:bg-green-700 text-white p-2 rounded">
           Register
         </button>
 
         <p className="text-sm mt-3 text-center">
           Sudah punya akun?{" "}
-          <Link to="/login" className="text-blue-500">
+          <Link to="/login" className="text-blue-600">
             Login
           </Link>
         </p>
       </form>
-    </div>
+    </main>
   )
 }
 

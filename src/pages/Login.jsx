@@ -35,15 +35,15 @@ function Login() {
   }
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100 px-4">
+    <main className="flex justify-center items-center min-h-screen bg-gray-300 px-4">
       <form
         onSubmit={handleLogin}
-        className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm"
+        className="bg-gray-50 p-6 rounded-xl shadow-lg border border-gray-200 w-full max-w-sm"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">Login</h2>
 
         {error && (
-          <p className="text-red-500 text-sm mb-2">{error}</p>
+          <p className="text-red-600 text-sm mb-2">{error}</p>
         )}
 
         <input
@@ -62,18 +62,18 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button className="w-full bg-blue-500 hover:bg-blue-600 text-white p-2 rounded">
+        <button className="w-full bg-blue-600 hover:bg-blue-700 text-white p-2 rounded">
           Login
         </button>
 
         <p className="text-sm mt-3 text-center">
           Belum punya akun?{" "}
-          <Link to="/register" className="text-blue-500">
+          <Link to="/register" className="text-blue-600">
             Register
           </Link>
         </p>
       </form>
-    </div>
+    </main>
   )
 }
 
